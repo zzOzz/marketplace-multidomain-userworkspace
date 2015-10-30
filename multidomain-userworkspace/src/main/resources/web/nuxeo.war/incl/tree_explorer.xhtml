@@ -27,7 +27,7 @@ This file is an override of the original tree_explorer.xhtml which adds the extr
 
   <a4j:region renderRegionOnly="true" id="treeExplorerRegion">
     <h:form ajaxSubmit="true" id="treeExplorer">
-      <div class="tree_action">
+      <div class="tree action">
         <a4j:commandLink action="#{treeActions.reset()}" render="treeNav">
          <h:graphicImage value="/icons/refresh.png"
           alt="#{messages['label.refresh']}"
@@ -103,7 +103,7 @@ This file is an override of the original tree_explorer.xhtml which adds the extr
 <br/><hr/><br/>
   <a4j:region renderRegionOnly="true" id="userTreeExplorerRegion">
     <h:form ajaxSubmit="true" id="userTreeExplorer">
-      <div class="tree_action">
+      <div class="tree action">
         <a4j:commandLink action="#{treeActions.reset()}" render="userTreeNav">
          <h:graphicImage value="/icons/refresh.png"
           alt="#{messages['label.refresh']}"
