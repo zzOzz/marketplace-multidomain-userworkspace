@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 1
+Bundle-Name: multidomain-userworkspace
+Bundle-SymbolicName: fr.udl.nuxeo.multidomain.userworkspace;singleton:=true
+Bundle-Version: 0.0.1
+Bundle-Vendor: Université de Lyon
+Nuxeo-Component: OSGI-INF/actions-contrib.xml
+

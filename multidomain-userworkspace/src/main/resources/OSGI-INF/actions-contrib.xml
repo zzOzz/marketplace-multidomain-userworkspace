@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="fr.udl.nuxeo.ecm.platform.actions.contrib">
+
+  <!-- This contribution disables the menus "Personal workspace" ("Espace personnel") and "Back to document base" ("Retour à la base documentaire") -->
+
+  <extension target="org.nuxeo.ecm.platform.actions.ActionService" point="actions">
+    
+    <action id="SHOW_REPOSITORY" enabled="false" />
+    <action id="SHOW_PERSONAL_WORKSPACE" enabled="false" />
+  </extension>
+
+</component>
