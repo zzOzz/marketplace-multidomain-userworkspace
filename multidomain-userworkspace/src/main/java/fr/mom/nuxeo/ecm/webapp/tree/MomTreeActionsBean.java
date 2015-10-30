@@ -30,9 +30,9 @@ import org.apache.commons.logging.LogFactory;
 import org.jboss.seam.annotations.Install;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.Filter;
+import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.core.api.Sorter;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
 import org.nuxeo.ecm.webapp.tree.DocumentTreeNode;
@@ -65,11 +65,10 @@ public class MomTreeActionsBean extends TreeActionsBean {
      * Provides the personal user document tree excluding the root
      * 
      * @return List of document trees
-     * @throws ClientException
      *
      * @since 6.0
      */
-    public List<DocumentTreeNode> getUserTreeRoots() throws ClientException {
+    public List<DocumentTreeNode> getUserTreeRoots() {
         return getUserTreeRoots(false);
     }
 
@@ -80,12 +79,10 @@ public class MomTreeActionsBean extends TreeActionsBean {
      * @param treeName name of the tree, which will be prefixed by "user" inside
      *            the method
      * @return List of document trees
-     * @throws ClientException
      *
      * @since 6.0
      */
-    public List<DocumentTreeNode> getUserTreeRoots(String treeName)
-            throws ClientException {
+    public List<DocumentTreeNode> getUserTreeRoots(String treeName) {
         return getUserTreeRoots(false, treeName);
     }
 
@@ -97,12 +94,11 @@ public class MomTreeActionsBean extends TreeActionsBean {
      * @param treeName name of the tree, which will be prefixed by "user" inside
      *            the method
      * @return List of document trees
-     * @throws ClientException
      *
      * @since 6.0
      */
     protected List<DocumentTreeNode> getUserTreeRoots(boolean showRoot,
-            String treeName) throws ClientException {
+            String treeName) {
         return getUserTreeRoots(showRoot,
                 navigationContext.getCurrentDocument(), treeName);
     }
@@ -114,12 +110,10 @@ public class MomTreeActionsBean extends TreeActionsBean {
      * @param showRoot indicates whether to show the root tree node when the
      *            document tree is displayed
      * @return List of document trees
-     * @throws ClientException
      *
      * @since 6.0
      */
-    protected List<DocumentTreeNode> getUserTreeRoots(boolean showRoot)
-            throws ClientException {
+    protected List<DocumentTreeNode> getUserTreeRoots(boolean showRoot) {
         return getUserTreeRoots(showRoot,
                 navigationContext.getCurrentDocument(),
                 DEFAULT_TREE_PLUGIN_NAME);
@@ -133,12 +127,11 @@ public class MomTreeActionsBean extends TreeActionsBean {
      *            document tree is displayed
      * @param currentDocument points to the current document model
      * @return List of document trees
-     * @throws ClientException
      *
      * @since 6.0
      */
     protected List<DocumentTreeNode> getUserTreeRoots(boolean showRoot,
-            DocumentModel currentDocument) throws ClientException {
+            DocumentModel currentDocument) {
         return getUserTreeRoots(showRoot, currentDocument,
                 DEFAULT_TREE_PLUGIN_NAME);
     }
@@ -150,8 +143,7 @@ public class MomTreeActionsBean extends TreeActionsBean {
      * org.nuxeo.ecm.core.api.DocumentModel, java.lang.String)
      */
     protected List<DocumentTreeNode> getTreeRoots(boolean showRoot,
-            DocumentModel currentDocument, String treeName)
-            throws ClientException {
+            DocumentModel currentDocument, String treeName) {
 
         if (treeInvalidator.needsInvalidation()) {
             reset();
@@ -160,6 +152,7 @@ public class MomTreeActionsBean extends TreeActionsBean {
         List<DocumentTreeNode> currentTree = trees.get(treeName);
         if (currentTree == null) {
             currentTree = new ArrayList<DocumentTreeNode>();
+            DocumentModel globalRoot = null;
             DocumentModel firstAccessibleParent = null;
             if (isUserWorkspace) {
                 currentDocument = lastAccessedDocument;
@@ -179,27 +172,24 @@ public class MomTreeActionsBean extends TreeActionsBean {
                         firstAccessibleParent = currentDocument;
                     }
                 }
+                if (showRoot
+                        && (firstAccessibleParent == null || !"/".equals(firstAccessibleParent.getPathAsString()))) {
+                    // also add the global root if we don't already show it and it's accessible
+                    if (documentManager.exists(new PathRef("/"))) {
+                        globalRoot = documentManager.getRootDocument();
+                    }
+                }
+            }
+            showingGlobalRoot = globalRoot != null;
+            if (showingGlobalRoot) {
+                DocumentTreeNode treeRoot = newDocumentTreeNode(globalRoot, treeName);
+                currentTree.add(treeRoot);
+                log.debug("Tree initialized with additional global root");
             }
             firstAccessibleParentPath = firstAccessibleParent == null ? null
                     : firstAccessibleParent.getPathAsString();
             if (firstAccessibleParent != null) {
-                Filter filter = null;
-                Filter leafFilter = null;
-                Sorter sorter = null;
-                String pageProvider = null;
-                try {
-                    TreeManager treeManager = Framework.getService(TreeManager.class);
-                    filter = treeManager.getFilter(treeName);
-                    leafFilter = treeManager.getLeafFilter(treeName);
-                    sorter = treeManager.getSorter(treeName);
-                    pageProvider = treeManager.getPageProviderName(treeName);
-                } catch (Exception e) {
-                    log.error("Could not fetch filter or sorter for tree ", e);
-                }
-
-                DocumentTreeNode treeRoot = null;
-                treeRoot = new DocumentTreeNodeImpl(firstAccessibleParent,
-                        filter, leafFilter, sorter, pageProvider);
+                DocumentTreeNode treeRoot = newDocumentTreeNode(firstAccessibleParent, treeName);
                 currentTree.add(treeRoot);
                 log.debug("Tree initialized with document: "
                         + firstAccessibleParent.getId());
@@ -211,7 +201,7 @@ public class MomTreeActionsBean extends TreeActionsBean {
         }
         return trees.get(treeName);
     }
-
+    
     /**
      * Provides the personal user document tree
      * 
@@ -221,13 +211,11 @@ public class MomTreeActionsBean extends TreeActionsBean {
      * @param treeName name of the tree, which will be prefixed by "user" inside
      *            the method
      * @return List of document trees
-     * @throws ClientException
      *
      * @since 6.0
      */
     protected List<DocumentTreeNode> getUserTreeRoots(boolean showRoot,
-            DocumentModel currentDocument, String treeName)
-            throws ClientException {
+            DocumentModel currentDocument, String treeName) {
 
         String userTreeName = "user" + treeName;
         List<DocumentTreeNode> currentTree = trees.get(userTreeName);

@@ -5,7 +5,6 @@
 package fr.univstetienne.tool;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -14,7 +13,6 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 
@@ -46,11 +44,6 @@ public class TreeDomainsActions implements Serializable {
 	 * @return Liste des domaines triés par titre.
 	 */
 	public List<DocumentModel> getDomains() {
-		try {
-			return documentManager.query("SELECT * FROM Domain WHERE ecm:currentLifeCycleState != 'deleted'  ORDER BY dc:title");
-		} catch (ClientException e) {
-			LOG.error("Failed to fetch domains list", e);
-			return Collections.emptyList();
-		}
+		return documentManager.query("SELECT * FROM Domain WHERE ecm:currentLifeCycleState != 'deleted'  ORDER BY dc:title");
 	}
 }

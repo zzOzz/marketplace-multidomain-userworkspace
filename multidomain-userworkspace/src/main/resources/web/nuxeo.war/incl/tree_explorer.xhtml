@@ -1,4 +1,6 @@
-<div xmlns:h="http://java.sun.com/jsf/html"
+<h:panelGroup layout="block"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
   xmlns:f="http://java.sun.com/jsf/core"
   xmlns:c="http://java.sun.com/jstl/core"
   xmlns:a4j="http://richfaces.org/a4j"
@@ -25,7 +27,7 @@ This file is an override of the original tree_explorer.xhtml which adds the extr
 
   <a4j:region renderRegionOnly="true" id="treeExplorerRegion">
     <h:form ajaxSubmit="true" id="treeExplorer">
-      <div class="floatR">
+      <div class="tree_action">
         <a4j:commandLink action="#{treeActions.reset()}" render="treeNav">
          <h:graphicImage value="/icons/refresh.png"
           alt="#{messages['label.refresh']}"
@@ -83,9 +85,9 @@ This file is an override of the original tree_explorer.xhtml which adds the extr
                     <nxu:set var="quotaStats" value="#{node.quotaStats}">
                       <f:subview id="descendantCount" rendered="#{not empty quotaStats}">
                         <span>
-                          (<h:outputText value="#{quotaStats.total}">
+                          <h:outputText value="#{quotaStats.total}" class="chip">
                             <f:convertNumber groupingUsed="true" />
-                          </h:outputText>)
+                          </h:outputText>
                         </span>
                       </f:subview>
                     </nxu:set>
@@ -101,7 +103,7 @@ This file is an override of the original tree_explorer.xhtml which adds the extr
 <br/><hr/><br/>
   <a4j:region renderRegionOnly="true" id="userTreeExplorerRegion">
     <h:form ajaxSubmit="true" id="userTreeExplorer">
-      <div class="floatR">
+      <div class="tree_action">
         <a4j:commandLink action="#{treeActions.reset()}" render="userTreeNav">
          <h:graphicImage value="/icons/refresh.png"
           alt="#{messages['label.refresh']}"
@@ -139,9 +141,9 @@ This file is an override of the original tree_explorer.xhtml which adds the extr
                     <nxu:set var="quotaStats" value="#{node.quotaStats}">
                       <f:subview id="descendantCount2" rendered="#{not empty quotaStats}">
                         <span>
-                          (<h:outputText value="#{quotaStats.total}">
+                          <h:outputText value="#{quotaStats.total}" class="chip">
                             <f:convertNumber groupingUsed="true" />
-                          </h:outputText>)
+                          </h:outputText>
                         </span>
                       </f:subview>
                     </nxu:set>
@@ -160,13 +162,13 @@ This file is an override of the original tree_explorer.xhtml which adds the extr
 <ui:include src="/incl/popupMenu.xhtml">
   <ui:param name="popupMenuId" value="treeExplorer" />
 </ui:include>
-<script>
+<h:outputScript target="#{pageJsTarget}">
   if (window.addEventListener) {
     window.addEventListener("load", function (e) {window.loaded = true}, true);
   } else if (window.attachEvent) {
     window.attachEvent("onload", function (e) {window.loaded = true});
   }
   setupContextMenu("span.popupTarget", "treeExplorer_popupMenu");
-</script>
+</h:outputScript>
 
-</div>
+</h:panelGroup>

@@ -30,7 +30,6 @@ import org.apache.commons.logging.LogFactory;
 import org.jboss.seam.annotations.Install;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.Filter;
 import org.nuxeo.ecm.core.api.Sorter;
@@ -49,21 +48,20 @@ public class MomReducedTreeActionsBean extends MomTreeActionsBean {
     private static final Log log = LogFactory.getLog(MomReducedTreeActionsBean.class);
 
     @Override
-    public List<DocumentTreeNode> getTreeRoots() throws ClientException {
+    public List<DocumentTreeNode> getTreeRoots() {
         return getTreeRoots(true);
     }
 
     @Override
-    public List<DocumentTreeNode> getUserTreeRoots() throws ClientException {
+    public List<DocumentTreeNode> getUserTreeRoots() {
         return getUserTreeRoots(true);
     }
 
     /**
      * @since 5.4
      * @return a list containing a DocumentTreeNode for the Root document
-     * @throws ClientException
      */
-    public List<DocumentTreeNode> getRootNode() throws ClientException {
+    public List<DocumentTreeNode> getRootNode() {
         return getTreeRoots(true, documentManager.getRootDocument());
     }
 
@@ -75,8 +73,7 @@ public class MomReducedTreeActionsBean extends MomTreeActionsBean {
      */
     @Override
     protected List<DocumentTreeNode> getTreeRoots(boolean showRoot,
-            DocumentModel currentDocument, String treeName)
-            throws ClientException {
+            DocumentModel currentDocument, String treeName) {
 
         if (treeInvalidator.needsInvalidation()) {
             reset();
