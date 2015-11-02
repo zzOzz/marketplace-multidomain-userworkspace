@@ -3,6 +3,8 @@
 
   <!-- This contribution disables the menus "Personal workspace" ("Espace personnel") and "Back to document base" ("Retour à la base documentaire") -->
 
+  <require>org.nuxeo.ecm.platform.userworkspace.actions</require>
+
   <extension target="org.nuxeo.ecm.platform.actions.ActionService" point="actions">
     
     <action id="SHOW_REPOSITORY" enabled="false" />
