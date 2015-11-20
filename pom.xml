@@ -5,17 +5,17 @@
   <parent>
     <groupId>org.nuxeo.ecm.distribution</groupId>
     <artifactId>nuxeo-distribution</artifactId>
-    <version>7.4</version>
+    <version>7.10</version>
   </parent>
 
   <groupId>fr.udl.nuxeo.marketplace</groupId>
   <artifactId>parent</artifactId>
   <packaging>pom</packaging>
   <name>Nuxeo Marketplace packaging of multidomain-userworkspace</name>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>1.1.1-SNAPSHOT</version>
 
   <properties>
-    <marketplace.multidomain-userworkspace.version>1.1.0-SNAPSHOT</marketplace.multidomain-userworkspace.version>
+    <marketplace.multidomain-userworkspace.version>1.1.1-SNAPSHOT</marketplace.multidomain-userworkspace.version>
   </properties>
 
   <modules>
