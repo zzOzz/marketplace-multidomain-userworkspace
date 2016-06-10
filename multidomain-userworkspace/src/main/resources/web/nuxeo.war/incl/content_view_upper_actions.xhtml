@@ -1,0 +1,14 @@
+<c:if xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:c="http://java.sun.com/jstl/core"
+  xmlns:nxl="http://nuxeo.org/nxforms/layout"
+  xmlns:nxu="http://nuxeo.org/nxweb/util"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  test="#{contentView != null}">
+
+  <nxl:widget name="contentViewActions"
+    mode="view" value="#{currentDocument}"
+    actionStyleClass="#{actionStyleClass}"
+    ajaxReRender="#{contentIdToBeReRendered}" >
+<ui:param name="widgetProperty_useAjaxForm" value="#{useAjaxForm}" />
+</nxl:widget>
+</c:if>

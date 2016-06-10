@@ -4,11 +4,249 @@
   <!-- This contribution disables the menus "Personal workspace" ("Espace personnel") and "Back to document base" ("Retour à la base documentaire") -->
 
   <require>org.nuxeo.ecm.platform.userworkspace.actions</require>
+  <require>org.nuxeo.ecm.platform.forms.layout.LayoutStore</require>
 
-  <extension target="org.nuxeo.ecm.platform.actions.ActionService" point="actions">
-    
-    <action id="SHOW_REPOSITORY" enabled="false" />
-    <action id="SHOW_PERSONAL_WORKSPACE" enabled="false" />
+  <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
+    point="layouts">
+
+    <layout name="custom_grid_dashboard_layout">
+      <templates>
+        <template mode="any">
+          /layouts/layout_grid_template.xhtml
+        </template>
+      </templates>
+      <rows>
+        <row>
+          <widget>custom_dashboard_left</widget>
+          <widget>custom_dashboard_right</widget>
+        </row>
+      </rows>
+    </layout>
+
   </extension>
 
+  <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
+    point="widgets">
+
+    <widget name="custom_dashboard_left" type="documentActions">
+      <labels>
+        <label mode="any"></label>
+      </labels>
+      <properties widgetMode="any">
+        <property name="category">CUSTOM_DASHBOARD_LEFT</property>
+      </properties>
+      <controls mode="any">
+        <control name="gridStyleClass">gridStyle6</control>
+      </controls>
+    </widget>
+
+    <widget name="custom_dashboard_right" type="documentActions">
+      <labels>
+        <label mode="any"></label>
+      </labels>
+      <properties widgetMode="any">
+        <property name="category">CUSTOM_DASHBOARD_RIGHT</property>
+      </properties>
+      <controls mode="any">
+        <control name="gridStyleClass">gridStyle6</control>
+      </controls>
+    </widget>
+
+    <widget name="custom_dashboard_user_tasks" type="contentViewWithForms">
+      <handlingLabels>true</handlingLabels>
+      <labels>
+        <label mode="any">title.dashboard.userTasks</label>
+      </labels>
+      <helpLabels>
+        <label mode="any">label.workflow.tasks</label>
+      </helpLabels>
+      <translated>true</translated>
+      <properties widgetMode="any">
+        <property name="contentViewName">user_tasks</property>
+        <property name="foldable">true</property>
+        <property name="useAjaxForm">false</property>
+        <property name="useAjaxPagination">false</property>
+      </properties>
+    </widget>
+
+    <widget name="custom_dashboard_user_workspaces" type="contentViewWithForms">
+      <properties widgetMode="any">
+        <property name="contentViewName">user_workspaces</property>
+        <property name="foldable">true</property>
+        <property name="hideEmpty">true</property>
+        <property name="useAjaxForm">false</property>
+        <property name="useAjaxPagination">false</property>
+      </properties>
+    </widget>
+
+    <widget name="custom_dashboard_user_sections" type="contentViewWithForms">
+      <properties widgetMode="any">
+        <property name="contentViewName">user_sections</property>
+        <property name="foldable">true</property>
+        <property name="hideEmpty">true</property>
+        <property name="useAjaxForm">false</property>
+        <property name="useAjaxPagination">false</property>
+      </properties>
+    </widget>
+
+    <widget name="custom_dashboard_user_documents" type="contentViewWithForms">
+      <properties widgetMode="any">
+        <property name="contentViewName">user_documents</property>
+        <property name="foldable">true</property>
+        <property name="hideEmpty">true</property>
+        <property name="useAjaxForm">false</property>
+        <property name="useAjaxPagination">false</property>
+      </properties>
+    </widget>
+
+    <widget name="custom_dashboard_domain_documents" type="contentViewWithForms">
+      <properties widgetMode="any">
+        <property name="contentViewName">domain_documents</property>
+        <property name="foldable">true</property>
+        <property name="hideEmpty">true</property>
+        <property name="useAjaxForm">false</property>
+        <property name="useAjaxPagination">false</property>
+      </properties>
+    </widget>
+
+    <widget name="custom_dashboard_domain_published_documents" type="contentViewWithForms">
+      <properties widgetMode="any">
+        <property name="contentViewName">domain_published_documents</property>
+        <property name="foldable">true</property>
+        <property name="hideEmpty">true</property>
+        <property name="useAjaxForm">false</property>
+        <property name="useAjaxPagination">false</property>
+      </properties>
+    </widget>
+
+    <widget name="custom_dashboard_user_sites" type="contentViewWithForms">
+      <properties widgetMode="any">
+        <property name="contentViewName">user_sites</property>
+        <property name="foldable">true</property>
+        <property name="hideEmpty">true</property>
+        <property name="useAjaxForm">false</property>
+        <property name="useAjaxPagination">false</property>
+      </properties>
+    </widget>
+
+    <widget name="custom_dashboard_user_deleted_documents" type="contentViewWithForms">
+      <properties widgetMode="any">
+        <property name="contentViewName">user_deleted_documents</property>
+        <property name="foldable">true</property>
+        <property name="hideEmpty">true</property>
+        <property name="useAjaxForm">false</property>
+        <property name="useAjaxPagination">false</property>
+      </properties>
+    </widget>
+
+    <widget name="custom_dashboard_user_favorites" type="contentViewWithForms">
+      <properties widgetMode="any">
+        <property name="contentViewName">user_favorites</property>
+        <property name="foldable">true</property>
+        <property name="hideEmpty">false</property>
+        <property name="useAjaxForm">false</property>
+        <property name="useAjaxPagination">false</property>
+      </properties>
+    </widget>
+
+    <widget name="custom_dashboard_user_shared_documents" type="contentViewWithForms">
+      <properties widgetMode="any">
+        <property name="contentViewName">user_shared_documents</property>
+        <property name="foldable">true</property>
+        <property name="hideEmpty">false</property>
+        <property name="useAjaxForm">false</property>
+        <property name="useAjaxPagination">false</property>
+      </properties>
+    </widget>
+
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.actions.ActionService"
+    point="actions">
+    <action id="SHOW_REPOSITORY" enabled="false" />
+    <action id="SHOW_PERSONAL_WORKSPACE" >
+      <filter id="vincent">
+        <rule grant="true">
+          <condition>#{currentUser.name.equals("vincent.lombard")}</condition>
+        </rule>
+        <rule grant="false">
+          <condition>#{!currentUser.name.equals("vincent.lombard")}</condition>
+        </rule>
+      </filter>
+    </action>
+    <action id="custom_dashboard_user_favorites" type="widget" order="20">
+      <category>CUSTOM_DASHBOARD_LEFT</category>
+      <properties>
+        <property name="widgetName">custom_dashboard_user_favorites</property>
+      </properties>
+    </action>
+
+    <action id="custom_dashboard_user_shared_documents" type="widget" order="30">
+      <category>CUSTOM_DASHBOARD_LEFT</category>
+      <properties>
+        <property name="widgetName">custom_dashboard_user_shared_documents</property>
+      </properties>
+    </action>
+
+    <action id="custom_dashboard_user_tasks" type="widget" order="40">
+      <category>CUSTOM_DASHBOARD_LEFT</category>
+      <properties>
+        <property name="widgetName">custom_dashboard_user_tasks</property>
+      </properties>
+    </action>
+
+    <!-- dashboard_user_processes, with order 40, moved to addons -->
+
+    <action id="custom_dashboard_user_workspaces" type="widget" order="60" enabled="false">
+      <category>CUSTOM_DASHBOARD_LEFT</category>
+      <properties>
+        <property name="widgetName">custom_dashboard_user_workspaces</property>
+      </properties>
+    </action>
+
+    <action id="custom_dashboard_user_sections" type="widget" order="80">
+      <category>CUSTOM_DASHBOARD_LEFT</category>
+      <properties>
+        <property name="widgetName">custom_dashboard_user_sections</property>
+      </properties>
+    </action>
+
+    <action id="custom_dashboard_user_documents" type="widget" order="20">
+      <category>CUSTOM_DASHBOARD_RIGHT</category>
+      <properties>
+        <property name="widgetName">custom_dashboard_user_documents</property>
+      </properties>
+    </action>
+
+    <action id="custom_dashboard_domain_documents" type="widget" order="40">
+      <category>CUSTOM_DASHBOARD_RIGHT</category>
+      <properties>
+        <property name="widgetName">custom_dashboard_domain_documents</property>
+      </properties>
+    </action>
+
+    <action id="custom_dashboard_domain_published_documents" type="widget"
+      order="60">
+      <category>CUSTOM_DASHBOARD_RIGHT</category>
+      <properties>
+        <property name="widgetName">custom_dashboard_domain_published_documents</property>
+      </properties>
+    </action>
+
+    <action id="custom_dashboard_user_sites" type="widget" order="80">
+      <category>CUSTOM_DASHBOARD_RIGHT</category>
+      <properties>
+        <property name="widgetName">custom_dashboard_user_sites</property>
+      </properties>
+    </action>
+
+    <!-- disabled for now -->
+    <action id="custom_dashboard_user_deleted_documents" type="widget" order="100"
+      enabled="false">
+      <category>CUSTOM_DASHBOARD_RIGHT</category>
+      <properties>
+        <property name="widgetName">custom_dashboard_user_deleted_documents</property>
+      </properties>
+    </action>
+
+  </extension>
 </component>

@@ -12,10 +12,10 @@
   <artifactId>parent</artifactId>
   <packaging>pom</packaging>
   <name>Nuxeo Marketplace packaging of multidomain-userworkspace</name>
-  <version>1.1.1-SNAPSHOT</version>
+  <version>1.1.2-SNAPSHOT</version>
 
   <properties>
-    <marketplace.multidomain-userworkspace.version>1.1.1-SNAPSHOT</marketplace.multidomain-userworkspace.version>
+    <marketplace.multidomain-userworkspace.version>1.1.2-SNAPSHOT</marketplace.multidomain-userworkspace.version>
   </properties>
 
   <modules>

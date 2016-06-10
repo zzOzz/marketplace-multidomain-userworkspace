@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.udl.nuxeo</groupId>
   <artifactId>multidomain-userworkspace</artifactId>
-  <version>1.1.1-SNAPSHOT</version>
+  <version>1.1.2-SNAPSHOT</version>
   <name>multidomain-userworkspace</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -12,7 +12,7 @@
   <parent>
     <groupId>fr.udl.nuxeo.marketplace</groupId>
     <artifactId>parent</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
 <!--    <groupId>org.nuxeo</groupId>
     <artifactId>nuxeo-addons-parent</artifactId>

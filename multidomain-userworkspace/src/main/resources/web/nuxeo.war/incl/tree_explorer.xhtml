@@ -101,6 +101,7 @@ This file is an override of the original tree_explorer.xhtml which adds the extr
     </h:form>
   </a4j:region>
 <br/><hr/><br/>
+<c:if test="#{currentUser.isMemberOf('_SHOW_WORKSPACE')}" >
   <a4j:region renderRegionOnly="true" id="userTreeExplorerRegion">
     <h:form ajaxSubmit="true" id="userTreeExplorer">
       <div class="tree action">
@@ -156,7 +157,7 @@ This file is an override of the original tree_explorer.xhtml which adds the extr
       </dl>
     </h:form>
   </a4j:region>
-
+</c:if>
 </c:if>
 
 <ui:include src="/incl/popupMenu.xhtml">
